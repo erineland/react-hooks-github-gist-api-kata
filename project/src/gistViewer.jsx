@@ -18,19 +18,11 @@ class GistViewer extends Component {
   }
 
   setFavouriteFile = (favouriteFilename) => {
-    debugger;
     const username = this.state.currentUsername;
 
-    console.info(`Setting user favourite file in outer component scope`);
-    console.info(`Setting user favourite file with filename: ${favouriteFilename}`);
-    console.info(`Setting user favourite file for user: ${username}`);
-
     const currentUserFavourites = this.state.userFavourites;
-    console.info(`Current userFavourites are: ${JSON.stringify(currentUserFavourites)}`);
     const currentUserFavouriteFiles = currentUserFavourites[username];
-    console.info(`Current user ${username}'s favourite files are: ${currentUserFavouriteFiles}`);
 
-    // TODO: Use array deconstruction here instead!
     if (currentUserFavourites[username]) {
       currentUserFavourites[username] = currentUserFavouriteFiles.concat(favouriteFilename);
     } else {
@@ -50,7 +42,6 @@ class GistViewer extends Component {
   }
 
   searchTermChanged = e => {
-    console.info(`Search term being updated to: ${e.target.value}`);
     this.setState({
       searchTerm: e.target.value,
     })
@@ -73,16 +64,13 @@ class GistViewer extends Component {
     });
 
     const userToSearch = this.state.searchTerm;
-    console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
-      console.info(`response is: ${JSON.stringify(response)}`);
       this.setState({
         gistsToShow: response.data,
         currentUsername: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
       });
     }).catch(error => {
       ;
-      console.error(`error in getGistsForUser is: ${JSON.stringify(error)}`);
       this.setState({
         error: error.message,
       });
@@ -90,18 +78,12 @@ class GistViewer extends Component {
   }
 
   handleShowGist = gistId => {
-
-    console.info(`User has clicked Gist: ${gistId}`);
-
     getGist(gistId).then(response => {
 
-      console.info(`response from getGist is: ${response}`);
       this.setState({
         gistDetailsToShow: response.data,
       })
     }).catch(error => {
-      debugger;
-      console.error(`error in getGist is: ${JSON.stringify(error)}`);
       this.setState({
         error: error.message,
       });
