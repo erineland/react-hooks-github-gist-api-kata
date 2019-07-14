@@ -29,7 +29,7 @@ const GistDetails = ({
     userFavourites
 }) => {
     return (
-        <div>
+        <div className="gist-details__container">
             <h1>Gist Details!</h1>
             <div>
                 <h2>Files in Gist:</h2>
@@ -52,7 +52,7 @@ const GistDetails = ({
                                 }
                             </h3>
                             <h4>Content:</h4>
-                            <p>{currentFileDetails.content}</p>
+                            <code>{currentFileDetails.content}</code>
                             <button onClick={() => setFavourite(currentFileDetails.filename)}>Mark file as favourite</button>
                         </div>
                     })

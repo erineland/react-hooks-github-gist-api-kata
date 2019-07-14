@@ -29,3 +29,16 @@
   flex-direction: row;
   justify-content: space-around;
 }
+
+.gist-viewer__show-all-btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.gist-details__container {
+  display: flex;
+  flex-direction: column;
+  margin: 32px;
+}

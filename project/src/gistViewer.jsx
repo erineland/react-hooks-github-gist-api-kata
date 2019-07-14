@@ -120,9 +120,11 @@ class GistViewer extends Component {
         {
 
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <div>
-              <div>
-                <button onClick={this.showAllGists}>Show all Gists for {this.state.currentUsername} (Back)</button>
+            <div className="gist-viewer__gist-details-container">
+              <div className="gist-viewer__show-all-btn-container">
+                <button className="gist-viewer__show-all-btn" onClick={this.showAllGists}>
+                    Show all Gists for {this.state.currentUsername}
+                </button>
               </div>
               <GistDetails {...gistDetails}/>
             </div>
