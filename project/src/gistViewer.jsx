@@ -64,7 +64,7 @@ class GistViewer extends Component {
   }
 
   getGistsForUserClicked = () => {
-    // debugger;
+
 
     // Clear out whatever is current shown if user clicks search button
     this.setState({
@@ -75,14 +75,13 @@ class GistViewer extends Component {
     const userToSearch = this.state.searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
-      // debugger;
       console.info(`response is: ${JSON.stringify(response)}`);
       this.setState({
         gistsToShow: response.data,
         currentUsername: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
       });
     }).catch(error => {
-      debugger;
+      ;
       console.error(`error in getGistsForUser is: ${JSON.stringify(error)}`);
       this.setState({
         error: error.message,
@@ -91,11 +90,11 @@ class GistViewer extends Component {
   }
 
   handleShowGist = gistId => {
-    // debugger;
+
     console.info(`User has clicked Gist: ${gistId}`);
 
     getGist(gistId).then(response => {
-      // debugger;
+
       console.info(`response from getGist is: ${response}`);
       this.setState({
         gistDetailsToShow: response.data,
