@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getGistsForUser, getGist } from './services/github-gist-api-service';
 
-// import GistDetails from './gistDetails';
+import GistDetails from './gistDetails';
 import './App.css';
 
 const GistViewer = () => {
@@ -13,29 +13,8 @@ const GistViewer = () => {
   const [userFavourites, setUserFavourites] = useState([]);
   const [currentUsername, setCurrentUsername] = useState('');
 
-  const isFileCurrentUserFavourite = (filename, currentUsername, userFavourites) => {
-    debugger
-    // Retreive favourite files for the current username
-    const currentUserFavourites = userFavourites.filter(currentUserFavourites => {
-      return currentUserFavourites.username === currentUsername;
-    });
-
-    // Now check to see if the file to be rendered is a favourite of the currently searched user.
-    let fileIsFavouriteOfCurrentUser = false;
-    if (currentUserFavourites.length > 0) {
-      fileIsFavouriteOfCurrentUser = currentUserFavourites[0].favourites.indexOf(filename) > -1;
-    }
-
-    return fileIsFavouriteOfCurrentUser
-  }
-
   const setFavouriteFile = favouriteFilename => {
     debugger;
-    console.info(`Setting user favourite file in outer component scope`);
-    console.info(`Setting user favourite file with filename: ${favouriteFilename}`);
-    console.info(`Setting user favourite file for user: ${currentUsername}`);
-
-    console.info(`Current userFavourites are: ${JSON.stringify(userFavourites)}`);
 
     let userFavouritesFound = false;
     for (let i = 0; i < userFavourites.length; i++) {
@@ -44,7 +23,7 @@ const GistViewer = () => {
       if (currentUserFavourites.username === currentUsername) {
         userFavouritesFound = true;
 
-        if (currentUserFavourites.favourites.indexOf(favouriteFilename) < -1) {
+        if (currentUserFavourites.favourites.indexOf(favouriteFilename) === -1) {
           currentUserFavourites.favourites.push(favouriteFilename);
         }
       }
@@ -74,8 +53,6 @@ const GistViewer = () => {
   }
 
   const getGistsForUserClicked = () => {
-    // debugger;
-
     // Clear out whatever is current shown if user clicks search button
     setGistsToShow([]);
     setGistDetailsToShow(undefined);
@@ -83,7 +60,6 @@ const GistViewer = () => {
     const userToSearch = searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
-      // debugger;
       console.info(`response is: ${JSON.stringify(response)}`);
       setGistsToShow(response.data);
       setCurrentUsername(searchTerm);
@@ -95,11 +71,9 @@ const GistViewer = () => {
   }
 
   const handleShowGist = gistId => {
-    // debugger;
     console.info(`User has clicked Gist: ${gistId}`);
 
     getGist(gistId).then(response => {
-      // debugger;
       console.info(`response from getGist is: ${response}`);
       setGistDetailsToShow(response.data);
     }).catch(error => {
@@ -109,12 +83,12 @@ const GistViewer = () => {
     });
   }
 
-  // const gistDetails = {
-  //   setFavourite: setFavouriteFile,
-  //   gistDetails: gistDetailsToShow,
-  //   userFavourites: userFavourites,
-  //   currentUsername: currentUsername
-  // }
+  const gistDetailProps = {
+    setFavouriteFile,
+    gistDetailsToShow,
+    userFavourites,
+    currentUsername,
+  };
 
   return (
     <div className="gist-viewer__container">
@@ -131,40 +105,7 @@ const GistViewer = () => {
             <div>
               <button onClick={showAllGists}>Show all Gists for {currentUsername} (Back)</button>
             </div>
-            <div className="gist-details__container">
-              <h1>Gist Details!</h1>
-              <div>
-                <h2>Files in Gist:</h2>
-                {
-                  Object.keys(gistDetailsToShow.files).map((fileKey, index) => {
-                    const currentFileDetails = gistDetailsToShow.files[fileKey];
-                    console.info(
-                      `The current file details being rendered are: ${JSON.stringify(currentFileDetails)}`
-                    );
-                    return <div key={index}>
-                      <div className="gist-details__title-container">
-                        <h3>
-                          Filename: {currentFileDetails.filename}
-                          {
-                            isFileCurrentUserFavourite(
-                              currentFileDetails.filename,
-                              currentUsername,
-                              userFavourites,
-                            ) ? <span> - FAVOURITED! </span> : null
-                          }
-                        </h3>
-                        <button onClick={() => setFavouriteFile(currentFileDetails.filename)}>Favourite</button>
-                      </div>
-                      <div>
-                        <h4>Content:</h4>
-                        <code>{currentFileDetails.content}</code>
-                      </div>
-                    </div>
-                  })
-                }
-              </div>
-            </div>
-            );
+            <GistDetails {...gistDetailProps}/>
           </div>
           :
           <div className="gist-viewer__gists-search-results">
