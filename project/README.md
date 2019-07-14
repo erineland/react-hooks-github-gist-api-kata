@@ -1,3 +1,10 @@
+### Ben Nawaz Development Notes
+
+#### My Understanding/Assumptions About Requirements
+* sdf
+
+### Create React App Boilerplate
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
