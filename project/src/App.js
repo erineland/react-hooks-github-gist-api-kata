@@ -5,7 +5,6 @@ import GistDetails from './gistDetails';
 import './App.css';
 
 class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +12,35 @@ class App extends Component {
       error: undefined,
       searchTerm: '',
       gistDetailsToShow: undefined,
+      userFavourites: {}, // store objects with 'username' and 'favouriteFiles' arrays.
+      currentUsername: '',
     }
+  }
+
+  setFavouriteFile = (favouriteFilename) => {
+    debugger;
+    const username = this.state.username;
+
+    console.info(`Setting user favourite file in outer component scope`);
+    console.info(`Setting user favourite file with filename: ${favouriteFilename}`);
+    console.info(`Setting user favourite file for user: ${username}`);
+
+    const currentUserFavourites = this.state.userFavourites;
+    console.info(`Current userFavourites are: ${JSON.stringify(currentUserFavourites)}`);
+    const currentUserFavouriteFiles = currentUserFavourites[username];
+    console.info(`Current user ${username}'s favourite files are: ${currentUserFavouriteFiles}`);
+
+    // TODO: Use array deconstruction here instead!
+    if (currentUserFavourites[username]) {
+      currentUserFavourites[username] = currentUserFavouriteFiles.concat(favouriteFilename);
+    } else {
+      currentUserFavourites[username] = [favouriteFilename];
+    }
+
+    // Now update the favourite files with the new favourite files...
+    this.setState({
+      userFavourites: currentUserFavourites,
+    });
   }
 
   searchTermChanged = e => {
@@ -24,15 +51,16 @@ class App extends Component {
   }
 
   getGistsForUserClicked = () => {
-    debugger;
+    // debugger;
 
     const userToSearch = this.state.searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
-      debugger;
+      // debugger;
       console.info(`response is: ${JSON.stringify(response)}`);
       this.setState({
-        gistsToShow: response.data
+        gistsToShow: response.data,
+        username: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
       });
     }).catch(error => {
       debugger;
@@ -44,11 +72,11 @@ class App extends Component {
   }
 
   handleShowGist = gistId => {
-    debugger;
+    // debugger;
     console.info(`User has clicked Gist: ${gistId}`);
 
     getGist(gistId).then(response => {
-      debugger;
+      // debugger;
       console.info(`response from getGist is: ${response}`);
       this.setState({
         gistDetailsToShow: response.data,
@@ -70,8 +98,9 @@ class App extends Component {
           <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
         </div>
         {
+
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <GistDetails {...this.state.gistDetailsToShow} />
+            <GistDetails setFavourite={this.setFavouriteFile} details={this.state.gistDetailsToShow} />
             :
             <div className="gist-viewer__gists-search-results">
               {

@@ -2,6 +2,7 @@
 
 #### Development Notes
 * Meet the requirements in the most basic way FIRST. Then use any remaining time that I might have to improve and perfect the app.
+* Focussing on funtionality and implementation rather than presentation, I'll add some basic styling if I get time at the end.
 
 #### My Understanding/Assumptions About Requirements
 * sdf
