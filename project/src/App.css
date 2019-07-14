@@ -1,33 +1,57 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.gist-viewer__container {
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 100%;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
 }
 
-.App-link {
-  color: #61dafb;
+.gist-viewer__gist-result {
+  margin: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.gist-viewer__search-input {
+  flex-basis: 60%;
+  font-size: 16px;
+}
+
+.gist-viwer__search-btn {
+  flex-basis: 25%;
+  font-size: 16px;
+}
+
+.gist-viewer__gist-search-control-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.gist-viewer__show-all-btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.gist-viewer__show-all-btn {
+  font-size: 16px;
+}
+
+.gist-details__container {
+  display: flex;
+  flex-direction: column;
+  margin: 32px;
+}
+
+.gist-details__title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

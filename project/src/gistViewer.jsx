@@ -24,9 +24,7 @@ const GistViewer = () => {
     const currentUserFavourites = userFavourites;
     console.info(`Current userFavourites are: ${JSON.stringify(currentUserFavourites)}`);
     const currentUserFavouriteFiles = currentUserFavourites[username];
-    console.info(`Current user ${username}'s favourite files are: ${currentUserFavouriteFiles}`);
 
-    // TODO: Use array deconstruction here instead!
     if (currentUserFavourites[username]) {
       currentUserFavourites[username] = currentUserFavouriteFiles.concat(favouriteFilename);
     } else {
