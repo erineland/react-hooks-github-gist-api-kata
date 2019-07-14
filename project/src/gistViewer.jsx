@@ -134,6 +134,9 @@ class GistViewer extends Component {
               <GistDetails {...gistDetails}/>
             </div>
             :
+            this.state.gistsToShow.length === 0 ?
+            <h1> No search results! Search a GitHub username above</h1>
+            :
             <div className="gist-viewer__gists-search-results">
               {
                 this.state.gistsToShow.map((gist, index) => {
