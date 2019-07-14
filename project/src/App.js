@@ -1,6 +1,17 @@
 import React from 'react';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
+
+const makeTestRequest = () => {
+  axios.get('https://google.com').then(response => {
+    debugger;
+    console.info(`response is: ${JSON.stringify(response)}`);
+  }).catch(error => {
+    debugger;
+    console.error(`error is: ${JSON.stringify(error)}`);
+  })
+}
 
 function App() {
   return (
@@ -18,6 +29,7 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={makeTestRequest}>Click me to test Axios!</button>
       </header>
     </div>
   );
