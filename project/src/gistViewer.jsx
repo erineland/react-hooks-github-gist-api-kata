@@ -114,8 +114,8 @@ class GistViewer extends Component {
     return (
       <div className="gist-viewer__container">
         <div className="gist-viewer__gist-search-control-container">
-          <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
-          <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
+          <input className="gist-viewer__search-input" onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
+          <button className="gist-viwer__search-btn" onClick={this.getGistsForUserClicked}>Search Gists</button>
         </div>
         {
 
@@ -129,11 +129,12 @@ class GistViewer extends Component {
             :
             <div className="gist-viewer__gists-search-results">
               {
-                this.state.gistsToShow.map(gist => {
-                  return <div>
-                    <span onClick={() => this.handleShowGist(gist.id)}>
-                      Description: {gist.description} Created: {gist.created_at}
-                    </span>
+                this.state.gistsToShow.map((gist, index) => {
+                  return <div className="gist-viewer__gist-result" key={index}>
+                    <div onClick={() => this.handleShowGist(gist.id)}>
+                      <span>Description: {gist.description}</span>
+                      <span>Created: {gist.created_at}</span>
+                    </div>
                   </div>
                 })
               }
