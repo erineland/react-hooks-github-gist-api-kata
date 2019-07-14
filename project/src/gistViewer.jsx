@@ -123,7 +123,9 @@ class GistViewer extends Component {
           <button className="gist-viwer__search-btn" onClick={this.getGistsForUserClicked}>Search Gists</button>
         </div>
         {
-
+          this.state.error ?
+          <h1>Something went wrong! No search results found for that username. Try again.</h1>
+          :
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
             <div className="gist-viewer__gist-details-container">
               <div className="gist-viewer__show-all-btn-container">
