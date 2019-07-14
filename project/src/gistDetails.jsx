@@ -1,16 +1,8 @@
 import React from 'react';
 
 const isFileCurrentUserFavourite = (filename, currentUsername, userFavourites) => {
-    debugger;
-    // const currentUsername = this.props.currentUsername;
-    // const userFavourites = this.props.userFavourites;
-
-    console.info(`The currentUsername: ${currentUsername}`);
-    console.info(`The current favourites are: ${JSON.stringify(userFavourites)}`);
-
     // Retreive favourite files for the current username
     const currentUserFavourites = userFavourites[currentUsername];
-    console.info(`The favourites for the current user ${currentUsername} are: ${currentUserFavourites}`);
 
     // Now check to see if the file to be rendered is a favourite of the currently searched user.
     let fileIsFavouriteOfCurrentUser = false;
@@ -18,7 +10,6 @@ const isFileCurrentUserFavourite = (filename, currentUsername, userFavourites) =
         fileIsFavouriteOfCurrentUser = currentUserFavourites.indexOf(filename) > -1;
     }
 
-    console.info(`The current file ${filename} is a favourite of the current user ${currentUsername}? ${fileIsFavouriteOfCurrentUser}`);
     return fileIsFavouriteOfCurrentUser
 }
 
