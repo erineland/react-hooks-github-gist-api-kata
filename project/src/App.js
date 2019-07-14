@@ -1,38 +1,56 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
+import getGistsForUser from './services/github-gist-api-service';
 import logo from './logo.svg';
 import './App.css';
 
-const makeTestRequest = () => {
-  axios.get('https://google.com').then(response => {
-    debugger;
-    console.info(`response is: ${JSON.stringify(response)}`);
-  }).catch(error => {
-    debugger;
-    console.error(`error is: ${JSON.stringify(error)}`);
-  })
-}
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={makeTestRequest}>Click me to test Axios!</button>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      gistsToShow: [],
+      error: undefined,
+    }
+  }
+
+  getGistsForUserClicked = username => {
+    debugger;
+
+    const testUser = 'arcadia168';
+    getGistsForUser(testUser).then(response => {
+      debugger;
+      console.info(`response is: ${JSON.stringify(response)}`);
+      this.setState({
+        gistsToShow: response.data
+      });
+    }).catch(error => {
+      debugger;
+      console.error(`error is: ${JSON.stringify(error)}`);
+      this.setState({
+        error: error.message,
+      });
+    });
+  }
+
+  render() {
+    return (
+      <div className="gist-viewer__container">
+        <div className="gist-viewer__gist-search-control-container">
+          <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
+        </div>
+        <div className="gist-viewer__gists-search-results">
+          {
+            this.state.gistsToShow.map(gist => {
+              return <div>Description: {gist.description} Created: {gist.created_at}</div>
+            })
+          }
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
