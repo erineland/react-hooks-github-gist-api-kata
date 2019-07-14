@@ -1,6 +1,4 @@
-### Ben Nawaz Development Notes
-
-#### Development Notes
+### Development Notes
 * Focussing on funtionality and implementation rather than presentation, I'll add some basic styling if I get time at the end.
 * In extra time I made all components be pure function components as a best practice
 * I attempted to use Hooks but ran into minor issues, so jumped back to a working commit to add more meaningful features, as I sensed a black hole of time, going to try and look into this in my own time later.
