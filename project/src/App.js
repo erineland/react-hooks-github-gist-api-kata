@@ -60,6 +60,12 @@ class App extends Component {
   getGistsForUserClicked = () => {
     // debugger;
 
+    // Clear out whatever is current shown if user clicks search button
+    this.setState({
+      gistsToShow: [],
+      gistDetailsToShow: undefined,
+    });
+
     const userToSearch = this.state.searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
