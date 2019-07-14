@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { getGistsForUser, getGist } from './services/github-gist-api-service';
+
+import GistDetails from './gistDetails';
 import './App.css';
 
 class App extends Component {
@@ -69,7 +71,7 @@ class App extends Component {
         </div>
         {
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <p>{JSON.stringify(this.state.gistDetailsToShow)}</p>
+            <GistDetails {...this.state.gistDetailsToShow} />
             :
             <div className="gist-viewer__gists-search-results">
               {
