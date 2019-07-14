@@ -1,7 +1,7 @@
 ### Development Notes
-* Focussing on funtionality and implementation rather than presentation, I'll add some basic styling if I get time at the end.
-* In extra time I made all components be pure function components as a best practice
-* I attempted to use Hooks but ran into minor issues, so jumped back to a working commit to add more meaningful features, as I sensed a black hole of time, going to try and look into this in my own time later.
+* Simple app that makes calls to the GitHub Gist API and allows users to search for a GitHub username and list their public Gists and mark them as 'favourites' in state.
+* Learning how to use React hooks, and this coding exercise practices using only functional components and the `useState` hook.
+* Focussing on funtionality and implementation rather than presentation
 
 ### Create React App Boilerplate
 
