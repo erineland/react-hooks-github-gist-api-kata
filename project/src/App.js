@@ -50,6 +50,13 @@ class App extends Component {
     })
   }
 
+  showAllGists = () => {
+    // Show all gists again.
+    this.setState({
+      gistDetailsToShow: undefined,
+    });
+  }
+
   getGistsForUserClicked = () => {
     // debugger;
 
@@ -100,12 +107,17 @@ class App extends Component {
         {
 
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <GistDetails
-              setFavourite={this.setFavouriteFile}
-              details={this.state.gistDetailsToShow}
-              userFavourites={this.state.userFavourites}
-              currentUsername={this.state.currentUsername}
-            />
+            <div>
+              <div>
+                <button onClick={this.showAllGists}>Show all Gists for {this.state.currentUsername} (Back)</button>
+              </div>
+              <GistDetails
+                setFavourite={this.setFavouriteFile}
+                details={this.state.gistDetailsToShow}
+                userFavourites={this.state.userFavourites}
+                currentUsername={this.state.currentUsername}
+              />
+            </div>
             :
             <div className="gist-viewer__gists-search-results">
               {
