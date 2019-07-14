@@ -19,7 +19,7 @@ class App extends Component {
 
   setFavouriteFile = (favouriteFilename) => {
     debugger;
-    const username = this.state.username;
+    const username = this.state.currentUsername;
 
     console.info(`Setting user favourite file in outer component scope`);
     console.info(`Setting user favourite file with filename: ${favouriteFilename}`);
@@ -60,7 +60,7 @@ class App extends Component {
       console.info(`response is: ${JSON.stringify(response)}`);
       this.setState({
         gistsToShow: response.data,
-        username: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
+        currentUsername: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
       });
     }).catch(error => {
       debugger;
@@ -100,7 +100,12 @@ class App extends Component {
         {
 
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <GistDetails setFavourite={this.setFavouriteFile} details={this.state.gistDetailsToShow} />
+            <GistDetails
+              setFavourite={this.setFavouriteFile}
+              details={this.state.gistDetailsToShow}
+              userFavourites={this.state.userFavourites}
+              currentUsername={this.state.currentUsername}
+            />
             :
             <div className="gist-viewer__gists-search-results">
               {
