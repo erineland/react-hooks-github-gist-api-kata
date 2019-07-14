@@ -104,6 +104,13 @@ class GistViewer extends Component {
   }
 
   render() {
+    const gistDetails = {
+      setFavourite: this.setFavouriteFile,
+      gistDetails: this.state.gistDetailsToShow,
+      userFavourites: this.state.userFavourites,
+      currentUsername: this.state.currentUsername
+    }
+
     return (
       <div className="gist-viewer__container">
         <div className="gist-viewer__gist-search-control-container">
@@ -117,12 +124,7 @@ class GistViewer extends Component {
               <div>
                 <button onClick={this.showAllGists}>Show all Gists for {this.state.currentUsername} (Back)</button>
               </div>
-              <GistDetails
-                setFavourite={this.setFavouriteFile}
-                details={this.state.gistDetailsToShow}
-                userFavourites={this.state.userFavourites}
-                currentUsername={this.state.currentUsername}
-              />
+              <GistDetails {...gistDetails}/>
             </div>
             :
             <div className="gist-viewer__gists-search-results">
