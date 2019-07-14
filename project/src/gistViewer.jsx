@@ -1,31 +1,27 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { getGistsForUser, getGist } from './services/github-gist-api-service';
 
 import GistDetails from './gistDetails';
 import './App.css';
 
-class GistViewer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      gistsToShow: [],
-      error: undefined,
-      searchTerm: '',
-      gistDetailsToShow: undefined,
-      userFavourites: {}, // store objects with 'username' and 'favouriteFiles' arrays.
-      currentUsername: '',
-    }
-  }
+const GistViewer = () => {
+  // Declare hooks to use
+  const [gistsToShow, setGistsToShow] = useState([]);
+  const [error, setError] = useState(undefined);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [gistDetailsToShow, setGistDetailsToShow] = useState(undefined);
+  const [userFavourites, setUserFavourites] = useState({});
+  const [currentUsername, setCurrentUsername] = useState('');
 
-  setFavouriteFile = (favouriteFilename) => {
+  const setFavouriteFile = (favouriteFilename) => {
     debugger;
-    const username = this.state.currentUsername;
+    const username = currentUsername;
 
     console.info(`Setting user favourite file in outer component scope`);
     console.info(`Setting user favourite file with filename: ${favouriteFilename}`);
     console.info(`Setting user favourite file for user: ${username}`);
 
-    const currentUserFavourites = this.state.userFavourites;
+    const currentUserFavourites = userFavourites;
     console.info(`Current userFavourites are: ${JSON.stringify(currentUserFavourites)}`);
     const currentUserFavouriteFiles = currentUserFavourites[username];
     console.info(`Current user ${username}'s favourite files are: ${currentUserFavouriteFiles}`);
@@ -38,110 +34,91 @@ class GistViewer extends Component {
     }
 
     // Now update the favourite files with the new favourite files...
-    this.setState({
-      userFavourites: currentUserFavourites,
-    });
+    setUserFavourites(currentUserFavourites);
   }
 
-  searchTermChanged = e => {
+  const searchTermChanged = e => {
     console.info(`Search term being updated to: ${e.target.value}`);
-    this.setState({
-      searchTerm: e.target.value,
-    })
+    setSearchTerm(e.target.value);
   }
 
-  showAllGists = () => {
+  const showAllGists = () => {
     // Show all gists again.
-    this.setState({
-      gistDetailsToShow: undefined,
-    });
+    setGistDetailsToShow(undefined);
   }
 
-  getGistsForUserClicked = () => {
+  const getGistsForUserClicked = () => {
     // debugger;
 
     // Clear out whatever is current shown if user clicks search button
-    this.setState({
-      gistsToShow: [],
-      gistDetailsToShow: undefined,
-    });
+    setGistsToShow([]);
+    setGistDetailsToShow(undefined);
 
-    const userToSearch = this.state.searchTerm;
+    const userToSearch = searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
       // debugger;
       console.info(`response is: ${JSON.stringify(response)}`);
-      this.setState({
-        gistsToShow: response.data,
-        currentUsername: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
-      });
+      setGistsToShow(response.data);
+      setCurrentUsername(searchTerm);
     }).catch(error => {
       debugger;
       console.error(`error in getGistsForUser is: ${JSON.stringify(error)}`);
-      this.setState({
-        error: error.message,
-      });
+      setError(error.message);
     });
   }
 
-  handleShowGist = gistId => {
+  const handleShowGist = gistId => {
     // debugger;
     console.info(`User has clicked Gist: ${gistId}`);
 
     getGist(gistId).then(response => {
       // debugger;
       console.info(`response from getGist is: ${response}`);
-      this.setState({
-        gistDetailsToShow: response.data,
-      })
+      setGistDetailsToShow(response.data);
     }).catch(error => {
       debugger;
       console.error(`error in getGist is: ${JSON.stringify(error)}`);
-      this.setState({
-        error: error.message,
-      });
+      setError(error.message);
     });
   }
 
-  render() {
-    const gistDetails = {
-      setFavourite: this.setFavouriteFile,
-      gistDetails: this.state.gistDetailsToShow,
-      userFavourites: this.state.userFavourites,
-      currentUsername: this.state.currentUsername
-    }
-
-    return (
-      <div className="gist-viewer__container">
-        <div className="gist-viewer__gist-search-control-container">
-          <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
-          <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
-        </div>
-        {
-
-          this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <div>
-              <div>
-                <button onClick={this.showAllGists}>Show all Gists for {this.state.currentUsername} (Back)</button>
-              </div>
-              <GistDetails {...gistDetails}/>
-            </div>
-            :
-            <div className="gist-viewer__gists-search-results">
-              {
-                this.state.gistsToShow.map(gist => {
-                  return <div>
-                    <span onClick={() => this.handleShowGist(gist.id)}>
-                      Description: {gist.description} Created: {gist.created_at}
-                    </span>
-                  </div>
-                })
-              }
-            </div>
-        }
-      </div>
-    );
+  const gistDetails = {
+    setFavourite: setFavouriteFile,
+    gistDetails: gistDetailsToShow,
+    userFavourites: userFavourites,
+    currentUsername: currentUsername
   }
+
+  return (
+    <div className="gist-viewer__container">
+      <div className="gist-viewer__gist-search-control-container">
+        <input onChange={searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
+        <button onClick={getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
+      </div>
+      {
+        gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
+          <div>
+            <div>
+              <button onClick={showAllGists}>Show all Gists for {currentUsername} (Back)</button>
+            </div>
+            <GistDetails {...gistDetails} />
+          </div>
+          :
+          <div className="gist-viewer__gists-search-results">
+            {
+              gistsToShow.map(gist => {
+                return <div>
+                  <span onClick={() => handleShowGist(gist.id)}>
+                    Description: {gist.description} Created: {gist.created_at}
+                  </span>
+                </div>
+              })
+            }
+          </div>
+      }
+    </div>
+  );
 }
 
 export default GistViewer;
