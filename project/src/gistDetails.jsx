@@ -40,20 +40,24 @@ const GistDetails = ({
                             `The current file details being rendered are: ${JSON.stringify(currentFileDetails)}`
                         );
                         return <div key={index}>
-                            <h3>
-                                Filename: {currentFileDetails.filename}
-                                {
-                                    isFileCurrentUserFavourite(
-                                        currentFileDetails.filename,
-                                        currentUsername,
-                                        userFavourites,
-                                    ) ?
-                                        <span> - FAVOURITED! </span> : null
-                                }
-                            </h3>
-                            <h4>Content:</h4>
-                            <code>{currentFileDetails.content}</code>
-                            <button onClick={() => setFavourite(currentFileDetails.filename)}>Mark file as favourite</button>
+                            <div className="gist-details__title-container">
+                                <h3>
+                                    Filename: {currentFileDetails.filename}
+                                    {
+                                        isFileCurrentUserFavourite(
+                                            currentFileDetails.filename,
+                                            currentUsername,
+                                            userFavourites,
+                                        ) ?
+                                            <span> - FAVOURITED! </span> : null
+                                    }
+                                </h3>
+                                <button onClick={() => setFavourite(currentFileDetails.filename)}>Favourite</button>
+                            </div>
+                            <div>
+                                <h4>Content:</h4>
+                                <code>{currentFileDetails.content}</code>
+                            </div>
                         </div>
                     })
                 }
