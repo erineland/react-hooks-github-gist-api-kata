@@ -1,5 +1,8 @@
 ### ***REMOVED*** ***REMOVED*** Development Notes
 
+#### Development Notes
+* Meet the requirements in the most basic way FIRST. Then use any remaining time that I might have to improve and perfect the app.
+
 #### My Understanding/Assumptions About Requirements
 * sdf
 
