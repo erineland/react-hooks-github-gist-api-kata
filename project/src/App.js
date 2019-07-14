@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import getGistsForUser from './services/github-gist-api-service';
+import { getGistsForUser, getGist } from './services/github-gist-api-service';
 import './App.css';
 
 class App extends Component {
@@ -10,6 +10,7 @@ class App extends Component {
       gistsToShow: [],
       error: undefined,
       searchTerm: '',
+      gistDetailsToShow: undefined,
     }
   }
 
@@ -20,7 +21,7 @@ class App extends Component {
     })
   }
 
-  getGistsForUserClicked = username => {
+  getGistsForUserClicked = () => {
     debugger;
 
     const userToSearch = this.state.searchTerm;
@@ -33,7 +34,26 @@ class App extends Component {
       });
     }).catch(error => {
       debugger;
-      console.error(`error is: ${JSON.stringify(error)}`);
+      console.error(`error in getGistsForUser is: ${JSON.stringify(error)}`);
+      this.setState({
+        error: error.message,
+      });
+    });
+  }
+
+  handleShowGist = gistId => {
+    debugger;
+    console.info(`User has clicked Gist: ${gistId}`);
+
+    getGist(gistId).then(response => {
+      debugger;
+      console.info(`response from getGist is: ${response}`);
+      this.setState({
+        gistDetailsToShow: response.data,
+      })
+    }).catch(error => {
+      debugger;
+      console.error(`error in getGist is: ${JSON.stringify(error)}`);
       this.setState({
         error: error.message,
       });
@@ -44,13 +64,22 @@ class App extends Component {
     return (
       <div className="gist-viewer__container">
         <div className="gist-viewer__gist-search-control-container">
-          <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..."/>
+          <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
           <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
         </div>
         <div className="gist-viewer__gists-search-results">
           {
             this.state.gistsToShow.map(gist => {
-              return <div>Description: {gist.description} Created: {gist.created_at}</div>
+              return <div>
+                <span>
+                  Description: {gist.description} Created: {gist.created_at}
+                </span>
+                <span>
+                  <button onClick={() => this.handleShowGist(gist.id)} className="gist-viewer__show-gist-details">
+                    Show details
+                  </button>
+                </span>
+              </div>
             })
           }
         </div>
