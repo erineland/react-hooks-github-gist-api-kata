@@ -43,6 +43,12 @@ class GistViewer extends Component {
     });
   }
 
+  isEnterPressed = e => {
+    if (e.keCode === 13 || e.which === 13) {
+      this.getGistsForUserClicked();
+    }
+  }
+
   searchTermChanged = e => {
     console.info(`Search term being updated to: ${e.target.value}`);
     this.setState({
@@ -58,7 +64,7 @@ class GistViewer extends Component {
   }
 
   getGistsForUserClicked = () => {
-    // debugger;
+
 
     // Clear out whatever is current shown if user clicks search button
     this.setState({
@@ -69,14 +75,13 @@ class GistViewer extends Component {
     const userToSearch = this.state.searchTerm;
     console.info(`The GitHub username search term is: ${userToSearch}`);
     getGistsForUser(userToSearch).then(response => {
-      // debugger;
       console.info(`response is: ${JSON.stringify(response)}`);
       this.setState({
         gistsToShow: response.data,
         currentUsername: this.state.searchTerm, //we know at this point the search term is a valid GitHub username
       });
     }).catch(error => {
-      debugger;
+      ;
       console.error(`error in getGistsForUser is: ${JSON.stringify(error)}`);
       this.setState({
         error: error.message,
@@ -85,11 +90,11 @@ class GistViewer extends Component {
   }
 
   handleShowGist = gistId => {
-    // debugger;
+
     console.info(`User has clicked Gist: ${gistId}`);
 
     getGist(gistId).then(response => {
-      // debugger;
+
       console.info(`response from getGist is: ${response}`);
       this.setState({
         gistDetailsToShow: response.data,
@@ -104,34 +109,39 @@ class GistViewer extends Component {
   }
 
   render() {
+    const gistDetails = {
+      setFavourite: this.setFavouriteFile,
+      gistDetails: this.state.gistDetailsToShow,
+      userFavourites: this.state.userFavourites,
+      currentUsername: this.state.currentUsername
+    }
+
     return (
       <div className="gist-viewer__container">
         <div className="gist-viewer__gist-search-control-container">
-          <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
-          <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
+          <input className="gist-viewer__search-input" onKeyPress={this.isEnterPressed} onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
+          <button className="gist-viwer__search-btn" onClick={this.getGistsForUserClicked}>Search Gists</button>
         </div>
         {
 
           this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
-            <div>
-              <div>
-                <button onClick={this.showAllGists}>Show all Gists for {this.state.currentUsername} (Back)</button>
+            <div className="gist-viewer__gist-details-container">
+              <div className="gist-viewer__show-all-btn-container">
+                <button className="gist-viewer__show-all-btn" onClick={this.showAllGists}>
+                    Show all Gists for {this.state.currentUsername}
+                </button>
               </div>
-              <GistDetails
-                setFavourite={this.setFavouriteFile}
-                details={this.state.gistDetailsToShow}
-                userFavourites={this.state.userFavourites}
-                currentUsername={this.state.currentUsername}
-              />
+              <GistDetails {...gistDetails}/>
             </div>
             :
             <div className="gist-viewer__gists-search-results">
               {
-                this.state.gistsToShow.map(gist => {
-                  return <div>
-                    <span onClick={() => this.handleShowGist(gist.id)}>
-                      Description: {gist.description} Created: {gist.created_at}
-                    </span>
+                this.state.gistsToShow.map((gist, index) => {
+                  return <div className="gist-viewer__gist-result" key={index}>
+                    <div onClick={() => this.handleShowGist(gist.id)}>
+                      <span>Description: {gist.description}</span>
+                      <span>Created: {gist.created_at}</span>
+                    </div>
                   </div>
                 })
               }

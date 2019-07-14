@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import GistViewer from './gistViewer';
+import GistViewer from './gistViewer.jsx';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(<GistViewer />, document.getElementById('root'));
