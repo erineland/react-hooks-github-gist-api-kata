@@ -67,22 +67,27 @@ class App extends Component {
           <input onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
           <button onClick={this.getGistsForUserClicked} className="gist-viwer__search-btn">Search Gists</button>
         </div>
-        <div className="gist-viewer__gists-search-results">
-          {
-            this.state.gistsToShow.map(gist => {
-              return <div>
-                <span>
-                  Description: {gist.description} Created: {gist.created_at}
-                </span>
-                <span>
-                  <button onClick={() => this.handleShowGist(gist.id)} className="gist-viewer__show-gist-details">
-                    Show details
+        {
+          this.state.gistDetailsToShow ? //If a Gist has been clicked, show only the details of that Gist
+            <p>{JSON.stringify(this.state.gistDetailsToShow)}</p>
+            :
+            <div className="gist-viewer__gists-search-results">
+              {
+                this.state.gistsToShow.map(gist => {
+                  return <div>
+                    <span>
+                      Description: {gist.description} Created: {gist.created_at}
+                    </span>
+                    <span>
+                      <button onClick={() => this.handleShowGist(gist.id)} className="gist-viewer__show-gist-details">
+                        Show details
                   </button>
-                </span>
-              </div>
-            })
-          }
-        </div>
+                    </span>
+                  </div>
+                })
+              }
+            </div>
+        }
       </div>
     );
   }
