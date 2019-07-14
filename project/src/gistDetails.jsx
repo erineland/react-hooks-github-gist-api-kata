@@ -1,7 +1,6 @@
 import React from 'react';
 
 const isFileCurrentUserFavourite = (filename, currentUsername, userFavourites) => {
-    debugger
     // Retreive favourite files for the current username
     const currentUserFavourites = userFavourites.filter(currentUserFavourites => {
       return currentUserFavourites.username === currentUsername;
