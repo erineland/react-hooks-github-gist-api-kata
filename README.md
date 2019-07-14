@@ -1,4 +1,4 @@
-### Development Notes
+# Development Notes
 * Simple app that makes calls to the GitHub Gist API and allows users to search for a GitHub username and list their public Gists and mark them as 'favourites' in state.
 * Learning how to use React hooks, and this coding exercise practices using only functional components and the `useState` hook.
 * Focussing on funtionality and implementation rather than presentation
