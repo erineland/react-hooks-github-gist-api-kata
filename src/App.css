@@ -1,0 +1,57 @@
+.gist-viewer__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.gist-viewer__gist-result {
+  margin: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.gist-viewer__search-input {
+  flex-basis: 60%;
+  font-size: 16px;
+}
+
+.gist-viwer__search-btn {
+  flex-basis: 25%;
+  font-size: 16px;
+}
+
+.gist-viewer__gist-search-control-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.gist-viewer__show-all-btn-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.gist-viewer__show-all-btn {
+  font-size: 16px;
+}
+
+.gist-details__container {
+  display: flex;
+  flex-direction: column;
+  margin: 32px;
+}
+
+.gist-details__title-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
