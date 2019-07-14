@@ -3,6 +3,7 @@
 #### Development Notes
 * Meet the requirements in the most basic way FIRST. Then use any remaining time that I might have to improve and perfect the app.
 * Focussing on funtionality and implementation rather than presentation, I'll add some basic styling if I get time at the end.
+* Ok with 1 hour 55 minutes to go (from the 4 hours 15 minutes) I've successfully met all of the basic requirements, without ANY styling or nice state management, I'm going to use the rest of the time to improve the code. But DONE (in a horrible way) by commit ec4c22ceefc3c465174dbc58308512cc3573704f.
 
 #### My Understanding/Assumptions About Requirements
 * sdf

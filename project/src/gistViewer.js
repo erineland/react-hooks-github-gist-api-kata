@@ -4,7 +4,7 @@ import { getGistsForUser, getGist } from './services/github-gist-api-service';
 import GistDetails from './gistDetails';
 import './App.css';
 
-class App extends Component {
+class GistViewer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -142,4 +142,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default GistViewer;
