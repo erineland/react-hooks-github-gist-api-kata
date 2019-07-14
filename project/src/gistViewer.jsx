@@ -43,6 +43,12 @@ class GistViewer extends Component {
     });
   }
 
+  isEnterPressed = e => {
+    if (e.keCode === 13 || e.which === 13) {
+      this.getGistsForUserClicked();
+    }
+  }
+
   searchTermChanged = e => {
     console.info(`Search term being updated to: ${e.target.value}`);
     this.setState({
@@ -114,7 +120,7 @@ class GistViewer extends Component {
     return (
       <div className="gist-viewer__container">
         <div className="gist-viewer__gist-search-control-container">
-          <input className="gist-viewer__search-input" onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
+          <input className="gist-viewer__search-input" onKeyPress={this.isEnterPressed} onChange={this.searchTermChanged} type="text" placeholder="Enter GitHub username to retrieve thier public Gists..." />
           <button className="gist-viwer__search-btn" onClick={this.getGistsForUserClicked}>Search Gists</button>
         </div>
         {
