@@ -75,13 +75,8 @@ class App extends Component {
               {
                 this.state.gistsToShow.map(gist => {
                   return <div>
-                    <span>
+                    <span onClick={() => this.handleShowGist(gist.id)}>
                       Description: {gist.description} Created: {gist.created_at}
-                    </span>
-                    <span>
-                      <button onClick={() => this.handleShowGist(gist.id)} className="gist-viewer__show-gist-details">
-                        Show details
-                  </button>
                     </span>
                   </div>
                 })
